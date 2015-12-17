@@ -1,0 +1,18 @@
+features:
+    vip:
+        strategy: percent
+        variants:
+            enabled: true
+            disabled: false
+
+    home_button:
+       strategy: percent_ranges
+       variants:
+           a: 30
+           b: 70
+           c: 100
+
+strategies:
+    percent:
+        options:
+            thresold: 50

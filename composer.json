@@ -1,0 +1,19 @@
+{
+    "name": "leoht/erlenmeyer",
+    "description": "A library to test PHP features or versions to user samples",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Léo Hetsch",
+            "email": "leo.hetsch@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/yaml": "^3.0",
+        "symfony/expression-language": "^3.0"
+    },
+    "autoload": {
+        "psr-4": { "LeoHt\\": "src/LeoHt" }
+    }
+}
