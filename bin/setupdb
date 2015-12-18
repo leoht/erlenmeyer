@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+require 'vendor/autoload.php';
+
+use LeoHt\Erlenmeyer\Memory\Pdo;
+
+$pdo = new \PDO('mysql:host=localhost;dbname=test', 'root', 'root');
+
+$memory = new Pdo($pdo);
+
+$memory->createTable();

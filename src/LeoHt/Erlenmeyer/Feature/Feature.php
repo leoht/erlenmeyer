@@ -13,16 +13,21 @@ class Feature
 	 * @var array
 	 */
 	protected $variants;
+
+    /**
+     * @var array
+     */
+    protected $options;
 	
-	public static function create($name, array $variants = array())
+	public static function create($name, array $variants = array(), array $options = array())
 	{
-		return new static($name, $variants);
+		return new static($name, $variants, $options);
 	}
 	
 	/**
 	 * Constructor.
 	 */
-	public function __construct($name, array $variants = array())
+	public function __construct($name, array $variants = array(), array $options = array())
 	{
 		$this->name = $name;
 		
@@ -31,6 +36,7 @@ class Feature
 		}
 		
 		$this->variants = $variants;
+        $this->options = $options;
 	}
 
     public function resolveVariant($value)
@@ -42,6 +48,11 @@ class Feature
         }
 
         return null;
+    }
+
+    public function setOption($key, $value)
+    {
+        $this->options[$key] = $value;
     }
 
     /**
@@ -92,4 +103,27 @@ class Feature
         return $this;
     }
  
+    /**
+     * Gets the value of options.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * Sets the value of options.
+     *
+     * @param array $options the options
+     *
+     * @return self
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
 }

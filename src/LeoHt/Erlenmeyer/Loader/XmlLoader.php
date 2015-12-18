@@ -5,9 +5,8 @@ namespace LeoHt\Erlenmeyer\Loader;
 use LeoHt\Erlenmeyer\Registry;
 use LeoHt\Erlenmeyer\Feature\Feature;
 use LeoHt\Erlenmeyer\Strategy\Strategy;
-use Symfony\Component\Yaml\Yaml;
 
-class YamlLoader implements LoaderInterface
+class XmlLoader implements LoaderInterface
 {
 	/**
 	 * @var array
@@ -32,16 +31,10 @@ class YamlLoader implements LoaderInterface
 
 	public function load(Registry $registry)
 	{
-		if ($this->cacheEnabled && extension_loaded('apc')) {
-			if ($cached = \apc_fetch('_feature_config_cache')) {
-				$this->data = $cached;
-			} else {
-				$this->data = Yaml::parse(file_get_contents($this->filePath));
-				\apc_store('_feature_config_cache', $this->data);
-			}
-		} else {
-			$this->data = Yaml::parse(file_get_contents($this->filePath));
-		}
+		$document = new \DomDocument($this->filePath);
+		$this->data = $document->saveXML();
+
+		var_dump($this->data); die();
 
 		$this->loadStrategies($registry);
 		$this->loadFeatures($registry);

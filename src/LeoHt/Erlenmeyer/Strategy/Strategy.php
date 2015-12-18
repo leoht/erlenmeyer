@@ -19,18 +19,19 @@ class Strategy
      */
     protected $options;
     
-    public static function create($name, $voter = null)
+    public static function create($name, $voter = null, $options = array())
     {
-        return new static($name, $voter);
+        return new static($name, $voter, $options);
     }
     
     /**
      * Constructor.
      */
-    public function __construct($name, $voter = null)
+    public function __construct($name, $voter = null, $options = array())
     {
         $this->name = $name;
         $this->voter = $voter;
+        $this->options = $options;
     }
 
     public function setOption($key, $value)

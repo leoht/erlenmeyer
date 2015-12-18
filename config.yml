@@ -1,18 +1,10 @@
 features:
-    vip:
-        strategy: percent
-        variants:
-            enabled: true
-            disabled: false
-
-    home_button:
-       strategy: percent_ranges
-       variants:
-           a: 30
-           b: 70
-           c: 100
+      top_secret:
+          strategy: ip_whitelist
+          variants: [enabled, disabled]
+          options:
+              whitelist: [127.0.0.1, 10.2.3.5]
 
 strategies:
-    percent:
-        options:
-            thresold: 50
+    ip_whitelist:
+         voter: "context.current_ip in options.whitelist"

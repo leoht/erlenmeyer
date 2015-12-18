@@ -7,6 +7,7 @@ use LeoHt\Erlenmeyer\Strategy\Strategy;
 use LeoHt\Erlenmeyer\Strategy\DefaultProvider;
 use LeoHt\Erlenmeyer\Strategy\ExpressionLanguage\Provider;
 use LeoHt\Erlenmeyer\Loader\YamlLoader;
+use LeoHt\Erlenmeyer\Loader\XmlLoader;
 use LeoHt\Erlenmeyer\Memory\MemoryInterface;
 use LeoHt\Erlenmeyer\Memory\Null as NullAdapter;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -30,7 +31,7 @@ class Erlenmeyer
      */
     protected $memoryAdapter;
 
-    public static function createFromConfig($file)
+    public static function buildFromConfig($file)
     {
         $registry = new Registry();
         $registry->registerProvider(new DefaultProvider());
@@ -41,6 +42,24 @@ class Erlenmeyer
 
         $loader = new YamlLoader($file);
         $loader->load($registry);
+
+        $decider = new Decider($language);
+        $memory = new NullAdapter();
+
+        return static::getInstance($registry, $decider, $memory);
+    }
+
+    public static function build($useDefaultProvider = true)
+    {
+        $registry = new Registry();
+        
+        if ($useDefaultProvider) {
+            $registry->registerProvider(new DefaultProvider());
+        }
+
+        $language = new ExpressionLanguage(null, [
+            new Provider()
+        ]);
 
         $decider = new Decider($language);
         $memory = new NullAdapter();
@@ -121,16 +140,19 @@ class Erlenmeyer
         if ($userKey = $this->getUserKey() && $result = $this->memoryAdapter->get($feature, $userKey)) {
             return $result;
         } else {
-            $result = $this->decider->decide($strategy, $context);
+            $userKey = $this->getUserKey();
+            $result = $this->decider->decide($strategy, $feature, $context);
 
-            $this->memoryAdapter->save(
-                $feature,
-                $userKey,
-                $result
-            );
+            if ($userKey) {
+                $this->memoryAdapter->save(
+                    $feature,
+                    $userKey,
+                    $result
+                );
+            }
         }
 
-        return $feature->resolveVariant($result);
+        return $result;
     }
 
     public function isVariant($featureName, $variant, array $context = array())

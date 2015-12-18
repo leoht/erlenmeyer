@@ -11,7 +11,7 @@ class Null implements MemoryInterface
 {
 	public function save(Feature $feature, $userKey, $variant)
     {
-    	// var_dump('DEBUG: saving feature '.$feature->getName().' with variant '.(int)$variant.' for user '.$userKey);
+    	// var_dump('DEBUG: saving feature '.$feature->getName().' with variant '.$variant.' for user '.$userKey);
     }
     
     public function get(Feature $feature, $userKey)

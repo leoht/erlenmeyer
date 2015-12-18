@@ -1,0 +1,12 @@
+<erlenmeyer>
+	<features>
+		<feature name="vip" strategy="distribute">
+			<variant name="enabled" />
+			<variant name="disabled" />
+			<option key="distribution">
+				<option key="enabled" value="30" />
+				<option key="disabled" value="70" />
+			</option>
+		</feature>
+	</features>
+</erlenmeyer>
