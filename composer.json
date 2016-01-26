@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "symfony/yaml": "^3.0",
+        "symfony/yaml": "*",
         "symfony/expression-language": "^3.0"
     },
     "autoload": {
